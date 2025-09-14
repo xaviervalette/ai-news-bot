@@ -1,0 +1,120 @@
+{
+    "nodes": [
+      {
+        "parameters": {
+          "model": "mistral-large-latest",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+        "typeVersion": 1,
+        "position": [
+          128,
+          -16
+        ],
+        "id": "94f199a1-ede6-4022-a4a8-7dd806926d39",
+        "name": "Mistral LLM",
+        "credentials": {
+          "mistralCloudApi": {
+            "id": "OqYABXIl4FtlGjt6",
+            "name": "Mistral Cloud account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "endpointUrl": "https://mcp.xvalette.com/mcp",
+          "serverTransport": "httpStreamable",
+          "include": "selected",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+        "typeVersion": 1.1,
+        "position": [
+          272,
+          -16
+        ],
+        "id": "8858d581-7a6b-4a65-b011-08b6e8cb6da7",
+        "name": "MCP",
+        "notesInFlow": true,
+        "notes": "Webex,\nGoogle News,\n..."
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "You are news agent trying to find relevant news for Cisco sales team regarding a specific customer : CISCO,\n\nNews regarding tech, acquisition, new sites, innovations, changing board, changing strategy are very relevant,\n\nSelect the top 5 best news for a Cisco sales team, and send a Webex card in english for each selected news xvalette@cisco.com,\n\nFor the title, use maximum 10 words,\nFor the description, use maximum 30 words,\n\nIdentify the similar news and only put one for the given topic,\n\nRename the title to be very clear and illustrate the news details",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.2,
+        "position": [
+          128,
+          -240
+        ],
+        "id": "55bee902-abf4-450a-926e-77f135a775c0",
+        "name": "AI News Bot"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "weeks",
+                "triggerAtDay": [
+                  1
+                ],
+                "triggerAtHour": 8
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -32,
+          -240
+        ],
+        "id": "c0571e35-d049-4387-b187-69d89040bbb2",
+        "name": "Every Monday"
+      }
+    ],
+    "connections": {
+      "Mistral LLM": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI News Bot",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "MCP": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI News Bot",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Every Monday": {
+        "main": [
+          [
+            {
+              "node": "AI News Bot",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {},
+    "meta": {
+      "templateCredsSetupCompleted": true,
+      "instanceId": "9ea0e43db398fbbbc743b0986cb27cae2c84e6bae56478b090ec2f0baba4a902"
+    }
+  }

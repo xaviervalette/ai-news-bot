@@ -1,0 +1,57 @@
+{
+    "type": "AdaptiveCard",
+    "version": "1.3",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "body": [
+        {
+            "type": "Container",
+            "style": "emphasis",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${title}",
+                    "wrap": true,
+                    "weight": "Bolder",
+                    "size": "ExtraLarge",
+                    "spacing": "Medium"
+                }
+            ],
+            "bleed": true,
+            "padding": "Medium"
+        },
+        {
+            "type": "Container",
+            "padding": "Medium",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${description}",
+                    "wrap": true,
+                    "size": "Small",
+                    "spacing": "Medium"
+                },
+                {
+                    "type": "FactSet",
+                    "facts": [
+                        {
+                            "title": "Source:",
+                            "value": "${source_name}"
+                        },
+                        {
+                            "title": "Published:",
+                            "value": "${source_date}"
+                        }
+                    ],
+                    "spacing": "Medium"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.OpenUrl",
+            "title": "Read Full Story",
+            "url": "${source_link}"
+        }
+    ]
+}
