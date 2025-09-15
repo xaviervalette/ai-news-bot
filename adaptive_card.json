@@ -50,7 +50,7 @@
     "actions": [
         {
             "type": "Action.OpenUrl",
-            "title": "Read Full Story",
+            "title": "Check articles on Google News",
             "url": "${source_link}"
         }
     ]
