@@ -1,48 +1,52 @@
 # AI News Bot
+Receive weekly notifications about news on a specific topic : it can be a customer, a technology, a country, ...
 
-This project is a stateless MCP server that provides tools for fetching Cisco news and interacting with Webex. It can be used as a backend for an AI agent that needs to perform these actions.
+This AI News Bot leverage the following technologies :
+- [N8N](https://n8n.io/)
+- [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro)
+- [Fast MCP and Python for the MCP Server](https://gofastmcp.com/getting-started/welcome)
+- [APIs for the Webex messaging](https://developer.webex.com/messaging/docs/api/v1/messages/create-a-message)
+- [RSS for the Google news](https://news.google.com/rss)
 
-## Features
+## What to expect ?
+<img width="324" height="533" alt="image" src="https://github.com/user-attachments/assets/49f4c002-143f-44ea-9e38-10ea8d236824" />
 
-*   **Get Cisco News:** Fetches recent news articles related to Cisco from the last 7 days via a Google News RSS feed.
-*   **Send Webex Message:** Sends a text or markdown message to a Webex user via their email address.
-*   **Send Webex News Card:** Sends a pre-formatted news bulletin as an Adaptive Card to a Webex user.
 
-## Installation
+## How it works ?
+<img width="802" height="365" alt="image" src="https://github.com/user-attachments/assets/7bc4b3d7-f1f4-42a2-a18b-1052bcca0349" />
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd ai-news-bot
-    ```
 
-2.  **Create a virtual environment:**
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate
-    ```
+## Prequisites
+- LLM API key (Mistral AI, Gemini, ...)
+- Webex Bot : https://developer.webex.com/messaging/docs/bots
+- N8N deployed, either cloud or on-prem
 
-3.  **Install dependencies:**
-    ```bash
-    pip install -e .
-    ```
+## Get started
 
-## Configuration
-
-This project uses a `.env` file for environment variables. Create a file named `.env` in the root of the project and add the following:
-
+Install uv (recommended Python package manager)
 ```
-WEBEX_ACCESS_TOKEN=<your-webex-access-token>
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Replace `<your-webex-access-token>` with your actual Webex access token.
-
-## Usage
-
-To run the server, use the following command:
-
-```bash
-python mcp_server.py
+Install dependencies and set up environment
+```
+uv venv && source .venv/bin/activate
+uv pip install -r pyproject.toml
 ```
 
-The server will start on `http://127.0.0.1:3000` by default. You can change the host and port using the `--host` and `--port` options.
+Run the basic MCP server This uses the Tavily API to expose a simple web_search tool.
+```
+uv run mcp_server.py
+```
+
+The MCP server will be available at:
+```
+http://localhost:3000/mcp/
+```
+
+[Then import the N8N workflow on N8N
+](https://docs.n8n.io/courses/level-one/chapter-6/),
+
+The N8N node needs to have access to the MCP server URL (http://localhost:3000/mcp/),
+
+If you are using the N8N Cloud, and using an on-prem MCP server, [Cloudflare Tunnels](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) can be an option to expose securely your MCP servers with HTTPS
