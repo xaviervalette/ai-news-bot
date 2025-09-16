@@ -8,8 +8,11 @@ This AI News Bot leverage the following technologies :
 - [APIs for the Webex messaging](https://developer.webex.com/messaging/docs/api/v1/messages/create-a-message)
 - [RSS for the Google news](https://news.google.com/rss)
 
+
+
+
 ## What to expect ?
-<img width="324" height="533" alt="image" src="https://github.com/user-attachments/assets/49f4c002-143f-44ea-9e38-10ea8d236824" />
+https://github.com/user-attachments/assets/a718927e-4bf9-4d73-b45a-51012dab792d
 
 
 ## How it works ?
